@@ -13,7 +13,7 @@ const Board = () => {
     const historyPointer = useRef(0)
     const shouldDraw = useRef(false)
     const {activeMenuItem, actionMenuItem} = useSelector((state) => state.menu)
-    const {color, size} = useSelector((state) => state.toolbox[activeMenuItem])
+    const {Effect, size} = useSelector((state) => state.toolbox[activeMenuItem])
 
 
     useEffect(() => {
@@ -41,22 +41,22 @@ const Board = () => {
         const canvas = canvasRef.current;
         const context = canvas.getContext('2d')
 
-        const changeConfig = (color, size) => {
-            context.strokeStyle = color
+        const changeConfig = (Effect, size) => {
+            context.strokeStyle = Effect
             context.lineWidth = size
         }
 
         const handleChangeConfig = (config) => {
             console.log("config", config)
-            changeConfig(config.color, config.size)
+            changeConfig(config.Effect, config.size)
         }
-        changeConfig(color, size)
+        changeConfig(Effect, size)
         socket.on('changeConfig', handleChangeConfig)
 
         return () => {
             socket.off('changeConfig', handleChangeConfig)
         }
-    }, [color, size])
+    }, [Effect, size])
 
     // before browser pain
     useEffect(() => {
